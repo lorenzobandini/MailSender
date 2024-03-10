@@ -18,4 +18,4 @@
 # Ignora il file di credenziali
 /src/main/java/com/jeitaly/mailsender/credentialsFile.txt
 /src/main/java/com/jeitaly/mailsender/generalMail.txt
-/src/main/java/com/jeitaly/mailsender/recipientsData.csv
+/src/main/java/com/jeitaly/mailsender/recipientData.csv
