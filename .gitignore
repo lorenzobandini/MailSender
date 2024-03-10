@@ -1,0 +1,21 @@
+# Ignora i file di configurazione dell'IDE
+/.vscode/
+*.iml
+*.iws
+
+# Ignora i file di build di Maven
+/target/
+
+# Ignora i file di log
+*.log
+
+# Ignora i file temporanei del sistema operativo
+*.tmp
+*.bak
+*.swp
+.DS_Store
+
+# Ignora il file di credenziali
+/src/main/java/com/jeitaly/mailsender/credentialsFile.txt
+/src/main/java/com/jeitaly/mailsender/generalMail.txt
+/src/main/java/com/jeitaly/mailsender/recipientsData.csv
