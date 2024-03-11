@@ -99,7 +99,7 @@ public class SenderThread implements Runnable {
             // Sostituisce le parole tra parentesi quadre con quelle del file recipientData.csv
             for (int i = 0; i < wordsToEdit.size(); i++) {
                 String word = wordsToEdit.get(i);
-                String recipientWord = recipientWords.get(i+2);
+                String recipientWord = recipientWords.get(i);
                 replaceWord(tempEditedMail, word, recipientWord);
             }
             mailReader.close();
