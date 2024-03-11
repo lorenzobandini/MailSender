@@ -1,6 +1,13 @@
 # MailSender
 
-MailSender è un'applicazione Java che consente l'invio di e-mail personalizzate a un insieme di destinatari. L'applicazione utilizza un server SMTP di Gmail per l'invio di e-mail.
+MailSender è un'applicazione Java che consente l'invio di e-mail personalizzate a un insieme di destinatari. L'applicazione utilizza un server SMTP di Gmail per l'invio di e-mail e per essere utilizzata non bisogna avere l'autenticazione a due fattori attiva e deve essere attivata l'impostazione per l'accesso alle app meno sicure al link [App meno sicure](https://myaccount.google.com/u/0/lesssecureapps?pli=1&rapt=AEjHL4NxEA3BgTnjOoLiJZGRqx3c8Di_zV2OsETFEjOsSsITJqovt7AzFN2ac64Ofme7bfjxRvovEwJKAIqCbr_BaWo8em7-XtmzKiyw9T3NTOqWZhtBfaw&pageId=none) del profilo usato per l'invio delle mail.
+
+Il progetto contiene un insieme di file a titolo di esempio con la dicitura `Example` alla fine del nome del file.
+Per l'utilizzo dell'applicazione è necessario modificare i file `credentialsExample.txt`, `generalMailExample.txt` e `recipientDataExample.csv` con le proprie credenziali, il testo della mail e i destinatari rinominandoli rispettivamente in `credentials.txt`, `generalMail.txt` e `recipientData.csv`.
+
+Viene utilizzato Maven per la gestione delle dipendenze e per la compilazione del progetto.
+
+Per l'esecuzione dell'applicazione è necessario eseguire il comando `mvn clean compile exec:java` nella directory del progetto.
 
 ## Funzionalità
 
