@@ -38,7 +38,7 @@ public class MailSenderMain {
     public static void main(String[] args) throws IOException {
         try {
             // Legge le credenziali dal file credentials.txt
-            File credentiaFile = new File("./src/main/java/com/jeitaly/mailsender/credentials.txt");
+            File credentiaFile = new File("./src/main/java/com/jeitaly/mailsender/credentialsFile.txt");
             Scanner credentialReader = new Scanner(credentiaFile);
             String senderEmail = credentialReader.nextLine();
 
@@ -187,13 +187,17 @@ public class MailSenderMain {
             for(String[] row : csvReader) {
 
                 // Controllo che il file csv sia scritto bene ad ogni riga
-                if((row.length - 2) != wordsToEdit.size()-2) {
+                if((row.length - 2) != wordsToEdit.size()) {
                     System.out.println("Errore: il numero di parole da sostituire non corrisponde al numero di parole fornite.");
                     return;
                 }
 
                 // Creo una lista di parole per ogni destinatario
                 String recipientEmail = row[0];
+                if(!isValidEmail(recipientEmail)) {
+                    System.out.println("Errore: l'indirizzo email del destinatario non è valido.");
+                    return;
+                }
                 String mailObject = row[1];
                 List<String> recipientWords = new ArrayList<>();
                 for(int i = 2; i < row.length; i++) {
@@ -203,7 +207,7 @@ public class MailSenderMain {
                 // Mando in escuzione un thread per ogni destinatario
                 executor.execute(new SenderThread(session, senderEmail, recipientEmail, mailObject, generalMail, wordsToEdit, recipientWords));
             }
-        }catch(Exception e) {
+        }catch(Exception e) {   
             System.out.println("Errore durante la partenza dei thread.");
             e.printStackTrace();
         } finally {
