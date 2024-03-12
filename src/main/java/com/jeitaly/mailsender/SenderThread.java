@@ -2,11 +2,9 @@ package com.jeitaly.mailsender;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.List;
-import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.mail.*;
@@ -72,68 +70,38 @@ public class SenderThread implements Runnable {
     }
 
     /**
-     * Modifica il contenuto di un'e-mail generale sostituendo le parole specificate con le parole del destinatario.
+     * Modifica il contenuto di un'email generale sostituendo le parole specificate con le parole del destinatario.
      * <p>
-     * Questo metodo copia il contenuto del file di posta generale in un file temporaneo, quindi sostituisce le parole tra parentesi quadrate
-     * con le parole corrispondenti dal file recipientData.csv.
+     * Questo metodo legge il contenuto del file di posta generale, sostituisce le parole indicate con le parole corrispondenti
+     * dal file recipientData.csv, e scrive l'email modificata in un file temporaneo.
      * <p>
      * Se si verifica un'eccezione durante la lettura, la scrittura o la modifica del file, viene stampato lo stack trace dell'eccezione.
-     * 
-     * @param generalMail Il file che contiene il corpo generale dell'e-mail.
-     * @param wordsToEdit La lista di parole da sostituire nel corpo dell'e-mail.
-     * @param recipientWords La lista di parole specifiche del destinatario da inserire nel corpo dell'e-mail.
-     * @param tempEditedMail Il file temporaneo in cui scrivere l'e-mail modificata.
+     *
+     * @param generalMail Il file che contiene il corpo generale dell'email.
+     * @param wordsToEdit La lista di parole da sostituire nel corpo dell'email.
+     * @param recipientWords La lista di parole specifiche del destinatario da inserire nel corpo dell'email.
+     * @param tempEditedMail Il file temporaneo in cui scrivere l'email modificata.
      */
     private void editMail(File generalMail, List<String> wordsToEdit, List<String> recipientWords, File tempEditedMail) {
         try{
-
-            Scanner mailReader = new Scanner(generalMail);
-            PrintWriter mailWriter = new PrintWriter(tempEditedMail);
-
-            // Copia contenuto del file generalMail.txt in un file temporaneo
-            while (mailReader.hasNextLine()) {
-                String line = mailReader.nextLine();
-                mailWriter.println(line);
-            }
-            
-            // Sostituisce le parole tra parentesi quadre con quelle del file recipientData.csv
+            // Leggi il contenuto del file generalMail.txt
+            String content = new String(Files.readAllBytes(generalMail.toPath()), StandardCharsets.UTF_8);
+    
+            // Sostituisci le parole nel contenuto
             for (int i = 0; i < wordsToEdit.size(); i++) {
                 String word = wordsToEdit.get(i);
                 String recipientWord = recipientWords.get(i);
-                replaceWord(tempEditedMail, word, recipientWord);
+                content = content.replaceAll(Pattern.quote(word), Matcher.quoteReplacement(recipientWord));
             }
-            mailReader.close();
-            mailWriter.close();
-            
+    
+            // Scrivi il contenuto modificato nel file temporaneo
+            Files.write(tempEditedMail.toPath(), content.getBytes(StandardCharsets.UTF_8));
+    
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
-    /**
-     * Sostituisce tutte le occorrenze di una parola in un file con un'altra parola.
-     * <p>
-     * Questo metodo legge il contenuto del file, sostituisce tutte le occorrenze della parola specificata con la parola del destinatario,
-     * e quindi scrive il contenuto modificato nel file.
-     * <p>
-     * Se si verifica un errore durante la lettura o la scrittura del file, viene lanciata un'eccezione IOException.
-     * 
-     * @param tempEditedMail Il file in cui sostituire la parola.
-     * @param word La parola da sostituire.
-     * @param recipientWord La parola con cui sostituire.
-     * @throws IOException Se si verifica un errore durante la lettura o la scrittura del file.
-     */
-    private void replaceWord(File tempEditedMail, String word, String recipientWord) throws IOException {
-        // Leggi il contenuto del file
-        String contentutoFile = new String(Files.readAllBytes(tempEditedMail.toPath()), StandardCharsets.UTF_8);
-
-        // Sostituisci tutte le occorrenze della parola
-        contentutoFile = contentutoFile.replaceAll(Pattern.quote(word), Matcher.quoteReplacement(recipientWord));
-
-        // Scrivi il contenuto modificato nel file
-        Files.write(tempEditedMail.toPath(), contentutoFile.getBytes(StandardCharsets.UTF_8));
-    }
-
+    
     /**
      * Invia un'e-mail utilizzando una sessione di posta elettronica, un mittente, un destinatario, un oggetto e un file che contiene il corpo dell'e-mail.
      * <p>
