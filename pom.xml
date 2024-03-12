@@ -4,30 +4,46 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <!-- Definizione del groupId, artifactId e version -->
     <groupId>com.jeitaly.mailsender</groupId>
     <artifactId>mailsender</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <!-- Definizione delle proprietà del progetto -->
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
     </properties>
 
+    <!-- Dichiarazione delle dipendenze del progetto -->
     <dependencies>
+        <!-- Dipendenza per JavaMail API -->
         <dependency>
 	        <groupId>com.sun.mail</groupId>
 	        <artifactId>javax.mail</artifactId>
 	        <version>1.5.5</version>
         </dependency>
+        <!-- Dipendenza per OpenCSV -->
         <dependency>
             <groupId>com.opencsv</groupId>
             <artifactId>opencsv</artifactId>
             <version>5.5</version>
         </dependency>
     </dependencies>
-
+    
     <build>
         <plugins>
+            <!-- Plugin per generare il file JAR -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <outputDirectory>${project.basedir}</outputDirectory>
+                </configuration>
+            </plugin>
+
+            <!-- Plugin per eseguire il main class -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
@@ -38,4 +54,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>
