@@ -7,7 +7,9 @@ Per l'utilizzo dell'applicazione è necessario modificare i file `credentialsExa
 
 Viene utilizzato Maven per la gestione delle dipendenze e per la compilazione del progetto.
 
-Per l'esecuzione dell'applicazione è necessario eseguire il comando `mvn clean compile exec:java` nella directory del progetto.
+Il metodo più facile per eseguire il progetto è utilizzare il file `mailsender-1.0-SNAPSHOT.jar` ed eseguirlo nella stessa directory dei file `credentials.txt`, `generalMail.txt` e `recipientData.csv`.
+
+In alternativa possiamo eseguire il programma eseguire il comando `mvn clean compile exec:java` nella directory del progetto.
 
 ## Funzionalità
 
