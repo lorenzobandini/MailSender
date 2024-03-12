@@ -201,7 +201,7 @@ public class MailSenderMain {
                 String mailObject = row[1];
                 List<String> recipientWords = new ArrayList<>();
                 for(int i = 2; i < row.length; i++) {
-                    recipientWords.add(row[i]);
+                    recipientWords.add(row[i].trim());
                 }
 
                 // Mando in escuzione un thread per ogni destinatario
