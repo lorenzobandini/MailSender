@@ -153,8 +153,8 @@ public class MailSenderMain {
             Pattern pattern = Pattern.compile("\\[(.*?)\\]");
             Matcher matcher = pattern.matcher(generalMailReader.useDelimiter("\\Z").next());
             while (matcher.find()) {
-                if(!wordsToEdit.contains(matcher.group(1))){
-                    wordsToEdit.add(matcher.group(1));
+                if(!wordsToEdit.contains(matcher.group(0))){
+                    wordsToEdit.add(matcher.group(0));
                 }
             }
             generalMailReader.close();
@@ -201,7 +201,7 @@ public class MailSenderMain {
                 String mailObject = row[1];
                 List<String> recipientWords = new ArrayList<>();
                 for(int i = 2; i < row.length; i++) {
-                    recipientWords.add(row[i].trim());
+                    recipientWords.add(row[i]);
                 }
 
                 // Mando in escuzione un thread per ogni destinatario
