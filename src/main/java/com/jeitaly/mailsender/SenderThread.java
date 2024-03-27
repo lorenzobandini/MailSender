@@ -83,7 +83,23 @@ public class SenderThread implements Runnable {
      * @param tempEditedMail Il file temporaneo in cui scrivere l'email modificata.
      */
     private void editMail(File generalMail, List<String> wordsToEdit, List<String> recipientWords, File tempEditedMail) {
-
+        try{
+            // Leggi il contenuto del file generalMail.txt
+            String content = new String(Files.readAllBytes(generalMail.toPath()), StandardCharsets.UTF_8);
+    
+            // Sostituisci le parole nel contenuto
+            for (int i = 0; i < wordsToEdit.size(); i++) {
+                String word = wordsToEdit.get(i);
+                String recipientWord = recipientWords.get(i);
+                content = content.replaceAll(Pattern.quote(word), Matcher.quoteReplacement(recipientWord));
+            }
+    
+            // Scrivi il contenuto modificato nel file temporaneo
+            Files.write(tempEditedMail.toPath(), content.getBytes(StandardCharsets.UTF_8));
+    
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     
     /**
